@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChaiTapari - Share & Connect</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF6F00;
+            --primary-dark: #E65100;
+            --primary-light: #FFE0B2;
+            --background: #FFFDF9;
+            --surface: #FFFFFF;
+            --on-surface: #2E1A08;
+            --on-surface-variant: #5D4037;
+            --accent: #E65100;
+            --border: #F3E5D8;
+            --shadow: rgba(93, 64, 55, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--background);
+            color: var(--on-surface);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Background Decorative elements */
+        .ambient-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 111, 0, 0.08) 0%, rgba(255, 253, 249, 0) 70%);
+            z-index: -1;
+        }
+
+        .glow-top {
+            top: -50px;
+            right: -50px;
+        }
+
+        .glow-bottom {
+            bottom: -50px;
+            left: -50px;
+        }
+
+        /* Card container */
+        .card {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            width: 100%;
+            max-width: 440px;
+            padding: 40px 32px;
+            box-shadow: 0 12px 36px var(--shadow);
+            text-align: center;
+            position: relative;
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Logo Area */
+        .logo-container {
+            margin-bottom: 24px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 84px;
+            height: 84px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            font-size: 40px;
+            box-shadow: 0 8px 24px rgba(255, 111, 0, 0.25);
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--on-surface);
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: var(--on-surface-variant);
+            margin-bottom: 32px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* Spinner / Checker */
+        .loading-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--on-surface-variant);
+        }
+
+        /* Download Section */
+        .download-section {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .info-pill {
+            display: inline-flex;
+            gap: 12px;
+            background-color: #FFF8F0;
+            border: 1px dashed var(--primary-light);
+            border-radius: 16px;
+            padding: 10px 16px;
+            margin-bottom: 28px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .info-divider {
+            color: var(--primary-light);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-decoration: none;
+            padding: 16px 28px;
+            border-radius: 18px;
+            font-size: 16px;
+            font-weight: 700;
+            box-shadow: 0 6px 20px rgba(255, 111, 0, 0.2);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 111, 0, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Release Notes */
+        .release-notes {
+            background-color: #FAFAFA;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 18px;
+            margin-top: 28px;
+            text-align: left;
+        }
+
+        .notes-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--on-surface-variant);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .notes-list {
+            list-style: none;
+            font-size: 13px;
+            color: var(--on-surface-variant);
+        }
+
+        .notes-list li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 6px;
+        }
+
+        .notes-list li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .footer {
+            margin-top: 24px;
+            font-size: 11px;
+            color: #9C8070;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-glow glow-top"></div>
+    <div class="ambient-glow glow-bottom"></div>
+
+    <div class="card">
+        <div class="logo-container">☕</div>
+        <h1>ChaiTapari</h1>
+        <div class="tagline">Chai pe charcha, muddo pe dhyan.</div>
+
+        <!-- 1. Checking installation & auto-routing -->
+        <div id="loading-view" class="loading-section">
+            <div class="spinner"></div>
+            <div class="loading-text">Opening ChaiTapari App...</div>
+        </div>
+
+        <!-- 2. Manual APK Download Fallback Screen -->
+        <div id="download-view" class="download-section">
+            <div class="info-pill">
+                <span>📦 Size: ~12 MB</span>
+                <span class="info-divider">|</span>
+                <span>✨ Latest Release</span>
+            </div>
+
+            <a id="download-btn" href="#" class="btn">
+                <span>Download ChaiTapari APK</span>
+            </a>
+
+            <div class="release-notes">
+                <div class="notes-title">What's New in ChaiTapari</div>
+                <ul class="notes-list">
+                    <li>Smart Sharing and direct deep-link charcha routing.</li>
+                    <li>Automatic App installation detection and redirection.</li>
+                    <li>Performance enhancements and fluid Material 3 design.</li>
+                </ul>
+            </div>
+
+            <div class="footer">Made with ❤️ by BlessedWorld India</div>
+        </div>
+    </div>
+
+    <script>
+        // Store configurable constants
+        const APK_DOWNLOAD_URL = "https://github.com/blessedworldindia/chaitapari-app/releases/latest/download/ChaiTapari.apk";
+        
+        // Setup direct download link in HTML
+        document.getElementById('download-btn').href = APK_DOWNLOAD_URL;
+
+        // Extract deep link query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get('type');
+        const id = urlParams.get('id');
+
+        // Formulate the app's custom deep-link URI
+        let appUri = "chaitapari://chaitapari-app/";
+        if (type && id) {
+            appUri += `?type=${encodeURIComponent(type)}&id=${encodeURIComponent(id)}`;
+        }
+
+        console.log("Constructed App Redirect URI: " + appUri);
+
+        // Attempt to redirect the browser to the app
+        let appRedirectTriggered = false;
+        
+        // Check if browser tab has gone into the background (which confirms success)
+        window.onblur = function() {
+            appRedirectTriggered = true;
+            console.log("App opened successfully, blurring landing page.");
+        };
+
+        // Attempt scheme navigation
+        window.location.href = appUri;
+
+        // Schedule fallback. If app isn't installed, redirection won't trigger blur,
+        // and after 2.5s we'll trigger direct download and show manual controls.
+        setTimeout(() => {
+            if (!appRedirectTriggered) {
+                console.log("App not installed or redirect failed. Triggering fallback APK download.");
+                
+                // Attempt automatic download
+                window.location.href = APK_DOWNLOAD_URL;
+                
+                // Swap views beautifully
+                document.getElementById('loading-view').style.display = 'none';
+                document.getElementById('download-view').style.display = 'block';
+            }
+        }, 2500);
+    </script>
+</body>
+</html>
